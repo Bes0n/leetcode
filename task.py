@@ -1,19 +1,20 @@
 #!/usr/bin/python3.10
 
 
-s = ["h","e","l","l","o"]
+nums = [-7,-3,2,3,11]
 
 left = 0
-right = len(s) - 1
+right = len(nums) - 1
 
 while left < right:
-    x = s[right]
-    y = s[left]
-    s[right] = y
-    s[left] = x
+    nums[left] = nums[left] ** 2
+    nums[right] = nums[right] ** 2
     left += 1
     right -= 1
 
-print(s)
+if len(nums) % 2 != 0 or len(nums) == 1:
+    print(nums[left])
+    nums[left] = nums[left] ** 2
 
-    
+sorts = sorted(nums)
+print(sorts)

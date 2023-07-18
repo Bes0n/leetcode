@@ -71,6 +71,16 @@ class Solution:
 ```
 
 ##### Reverse string
+```
+# Example 1:
+Input: s = ["h","e","l","l","o"]
+Output: ["o","l","l","e","h"]
+
+# Example 2:
+Input: s = ["H","a","n","n","a","h"]
+Output: ["h","a","n","n","a","H"]
+```
+
 ###### My solution
 ```
 class Solution(object):
@@ -102,4 +112,67 @@ class Solution:
                 helper(left + 1, right - 1)
 
         helper(0, len(s) - 1)
+```
+
+##### Squares of a Sorted Array
+```
+# Example 1:
+Input: nums = [-4,-1,0,3,10]
+Output: [0,1,9,16,100]
+Explanation: After squaring, the array becomes [16,1,0,9,100].
+After sorting, it becomes [0,1,9,16,100].
+
+# 
+Example 2:
+Input: nums = [-7,-3,2,3,11]
+Output: [4,9,9,49,121]
+```
+
+###### My solution
+```
+class Solution(object):
+    def sortedSquares(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        left = 0
+        right = len(nums) - 1
+
+        while left < right:
+            nums[left] = nums[left] ** 2
+            nums[right] = nums[right] ** 2
+            left += 1
+            right -= 1
+
+        if len(nums) % 2 != 0 or len(nums) == 1:
+            nums[left] = nums[left] ** 2
+
+        sorts = sorted(nums)
+        return(sorts)
+```
+
+###### Official solution
+```
+# Approach 1: Sort
+class Solution(object):
+    def sortedSquares(self, A):
+        return sorted(x*x for x in A)
+
+# Approach 2: Two Pointer
+class Solution:
+    def sortedSquares(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        result = [0] * n
+        left = 0
+        right = n - 1
+        for i in range(n - 1, -1, -1):
+            if abs(nums[left]) < abs(nums[right]):
+                square = nums[right]
+                right -= 1
+            else:
+                square = nums[left]
+                left += 1
+            result[i] = square * square
+        return result
 ```
