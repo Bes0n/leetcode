@@ -13,7 +13,6 @@ while left < right:
     right -= 1
 
 if len(nums) % 2 != 0 or len(nums) == 1:
-    print(nums[left])
     nums[left] = nums[left] ** 2
 
 sorts = sorted(nums)

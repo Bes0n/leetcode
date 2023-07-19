@@ -176,3 +176,6 @@ class Solution:
             result[i] = square * square
         return result
 ```
+
+##### Sliding window
+##### Sliding window
