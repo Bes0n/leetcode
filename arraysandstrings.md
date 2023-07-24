@@ -178,4 +178,146 @@ class Solution:
 ```
 
 ##### Sliding window
-##### Sliding window
+###### Length of the longest subarray
+```
+nums = [3, 1, 2, 7, 4, 2, 1, 1, 5]
+k = 8
+
+def find_length(nums, k):
+    left = curr = ans = 0
+    for right in range(len(nums)):
+        curr += nums[right]
+        while curr > k:
+            curr -= nums[left]
+            left += 1
+        ans = max(ans, right - left + 1)
+    
+    return ans
+```
+
+###### Longest substring achievable that contains only "1"
+```
+s = "1101100111"
+
+def find_length(s):
+    left = curr = ans = 0 
+    for right in range(len(s)):
+        if s[right] == "0":
+            curr += 1
+        while curr > 1:
+            if s[left] == "0":
+                curr -= 1
+            left += 1
+        ans = max(ans, right - left + 1)
+    
+    return ans
+```
+
+###### Subarray Product Less Than K.
+```
+nums = [10, 5, 2, 6]
+k = 100
+
+class Solution:
+    def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
+        if k <= 1:
+            return 0
+
+        ans = left = 0
+        curr = 1
+
+        for right in range(len(nums)):
+            curr *= nums[right]
+            while curr >= k:
+                curr //= nums[left]
+                left += 1
+            ans += right - left + 1
+
+        return ans
+```
+
+###### Sum of the subarray with the largest sum whose length is k
+```
+nums = [3, -1, 4, 12, -8, 5, 6]
+k = 4
+
+def find_best_subarray(nums, k):
+    curr = 0
+    for i in range(k):
+        curr += nums[i]
+    
+    ans = curr
+    for i in range(k, len(nums)):
+        curr += nums[i] - nums[i - k]
+        ans = max(ans, curr)
+    
+    return ans
+```
+
+
+###### Maximum Average Subarray I
+```
+# Example 1:
+Input: nums = [1,12,-5,-6,50,3], k = 4
+Output: 12.75000
+Explanation: Maximum average is (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75
+
+# Example 2:
+Input: nums = [5], k = 1
+Output: 5.00000
+```
+
+###### My solution
+```
+class Solution(object):
+    def findMaxAverage(self, nums, k):
+        ans = cur = 0
+        if len(nums) == 1:
+            return nums[0]
+
+        for i in range(k):
+            cur += nums[i]
+
+        ans = cur
+
+        for i in range(k, len(nums)):
+            cur +=  nums[i] - nums[i - k]
+            
+            if cur > ans:
+                ans = float(max(ans, cur))
+
+        ans = float(max(ans, cur))
+        
+        return ans / k
+```
+
+###### Max Consecutive Ones III
+```
+# Example 1:
+Input: nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2
+Output: 6
+Explanation: [1,1,1,0,0,1,1,1,1,1,1]
+Bolded numbers were flipped from 0 to 1. The longest subarray is underlined.
+
+# Example 2:
+Input: nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], k = 3
+Output: 10
+Explanation: [0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1]
+Bolded numbers were flipped from 0 to 1. The longest subarray is underlined.
+```
+
+###### Official Solution
+```
+    def longestOnes(self, nums, k):
+        left = curr = ans = 0 
+        for right in range(len(nums)):
+            if nums[right] == 0:
+                curr += 1
+            while curr > k:
+                if nums[left] == 0:
+                    curr -= 1
+                left += 1
+            ans = max(ans, right - left + 1)
+
+        return ans
+```
