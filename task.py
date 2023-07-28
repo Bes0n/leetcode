@@ -1,22 +1,25 @@
 #!/usr/bin/python3.10
 
-# nums = [1,1,1,0,0,0,1,1,1,1,0]
-# k = 2
+nums = [1, 6, 3, 2, 7, 2]
+queries = [[0, 3], [2, 5], [2, 4]]
+limit = 13
 
-nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1]
-k = 3
+def answer_queries(nums, queries, limit):
+    prefix = [nums[0]]
+    for i in range(1, len(nums)):
+        # print(prefix[-1])
+        # print(nums[i])
+        prefix.append(nums[i] + prefix[-1])
+    ans = []
+    for x, y in queries:
+        curr = prefix[y] - prefix[x] + nums[x]
+        print(curr)
+        ans.append(curr < limit)
 
-def longestOnes(nums, k):
-    left = curr = ans = 0 
-    for right in range(len(nums)):
-        if nums[right] == 0:
-            curr += 1
-        while curr > k:
-            if nums[left] == 0:
-                curr -= 1
-            left += 1
-        ans = max(ans, right - left + 1)
-    
-    return ans
+    # return ans
 
-print(longestOnes(nums,k))
+# [1, 7, 10, 12, 19, 21]
+# x = 1 10 10
+# y = 12 21 19 
+
+print(answer_queries(nums, queries, limit))
