@@ -1,19 +1,15 @@
 #!/usr/bin/python3.10
 
-# nums = [7,4,3,9,1,8,5,2,6] 
-nums = [5, 2, 7, 10, 3, 9]
-target = 8
+# arr = [1,1,3,3,5,5,7,7]
+arr = [1,2,3]
+# arr = [0,1]
 
-def getAverages(nums, target):
-    dic = {}
-    for i in range(len(nums)):
-        num = nums[i]
-        complement = target - num
-        if complement in dic: # This operation is O(1)!
-            return [nums[i], complement]
-        
-        dic[num] = i
-    
-    return [-1, -1]
+def func(arr):
+    n = set(arr)
+    total = 0
+    for x in arr:
+        if x + 1 in n:
+            total += 1
+    return total
 
-print(getAverages(nums, target))
+print(func(arr))

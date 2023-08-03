@@ -607,4 +607,149 @@ class Solution:
             dic[num] = i
         
         return [-1, -1]
+
+# Example 2: 2351. First Letter to Appear Twice
+# Given a string s, return the first character to appear twice. It is guaranteed that the input will have a duplicate character.
+
+class Solution:
+    def repeatedCharacter(self, s: str) -> str:
+        seen = set()
+        for c in s:
+            if c in seen:
+                return c
+            seen.add(c)
+
+        return " "
+
+# Example 3: Given an integer array nums, find all the numbers x that satisfy the following: x + 1 is not in nums, and x - 1 is not in nums.
+
+def find_numbers(nums):
+    ans = []
+    nums = set(nums)
+
+    for num in nums:
+        if (num + 1 not in nums) and (num - 1 not in nums):
+            ans.append(num)
+    
+    return ans
+```
+
+##### Check if the Sentence Is Pangram
+```
+# Example 1:
+
+Input: sentence = "thequickbrownfoxjumpsoverthelazydog"
+Output: true
+Explanation: sentence contains at least one of every letter of the English alphabet.
+
+# Example 2:
+
+Input: sentence = "leetcode"
+Output: false
+```
+
+###### My Solution 
+```
+class Solution(object):
+    def checkIfPangram(self, sentence):
+        seen = set()
+        for n in sentence:
+            if n not in seen:
+                seen.add(n)
+
+            if len(seen) == 26:
+                return True
+
+        return False
+```
+
+###### Official Solution
+```
+class Solution:
+    def checkIfPangram(self, sentence: str) -> bool:
+        # Add every letter of 'sentence' to hash set 'seen'.
+        seen = set(sentence)
+        
+        # If the size of 'seen' is 26, then 'sentence' is a pangram.
+        return len(seen) == 26
+```
+
+##### Missing Number
+```
+# Example 1:
+Input: nums = [3,0,1]
+Output: 2
+Explanation: n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.
+
+# Example 2:
+Input: nums = [0,1]
+Output: 2
+Explanation: n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums.
+
+# Example 3:
+Input: nums = [9,6,4,2,3,5,7,0,1]
+Output: 8
+Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.
+```
+
+###### My Solution
+```
+class Solution(object):
+    def missingNumber(self, nums):
+        nset = set(nums)
+        l = len(nums)
+        for n in range(l):
+            if n not in nset:
+                return n
+
+        return l
+```
+
+###### Official Solution
+```
+class Solution:
+    def missingNumber(self, nums):
+        num_set = set(nums)
+        n = len(nums) + 1
+        for number in range(n):
+            if number not in num_set:
+                return number
+```
+
+##### Counting Elements
+```
+# Given an integer array arr, count how many elements x there are, such that x + 1 is also in arr. If there are duplicates in arr, count them separately.
+
+# Example 1:
+Input: arr = [1,2,3]
+Output: 2
+Explanation: 1 and 2 are counted cause 2 and 3 are in arr.
+
+# Example 2:
+Input: arr = [1,1,3,3,5,5,7,7]
+Output: 0
+Explanation: No numbers are counted, cause there is no 2, 4, 6, or 8 in arr.
+```
+
+###### My Solution
+```
+class Solution(object):
+    def countElements(self, arr):
+        n = set(arr)
+        total = 0
+        for x in arr:
+            if x + 1 in n:
+                total += 1
+        return total
+```
+
+###### Official Solution
+```
+def countElements(self, arr: List[int]) -> int:
+    hash_set = set(arr)
+    count = 0
+    for x in arr:
+        if x + 1 in hash_set:
+            count += 1
+    return count
 ```
