@@ -753,3 +753,122 @@ def countElements(self, arr: List[int]) -> int:
             count += 1
     return count
 ```
+
+##### Checking for existence
+```
+# Example 1: You are given a string s and an integer k. Find the length of the longest substring that contains at most k distinct characters.
+# For example, given s = "eceba" and k = 2, return 3. The longest substring with at most 2 distinct characters is "ece".
+
+from collections import defaultdict
+
+def find_longest_substring(s, k):
+    counts = defaultdict(int)
+    left = ans = 0
+    for right in range(len(s)):
+        counts[s[right]] += 1
+        while len(counts) > k:
+            counts[s[left]] -= 1
+            if counts[s[left]] == 0:
+                del counts[s[left]]
+            left += 1
+        
+        ans = max(ans, right - left + 1)
+    
+    return ans
+
+# Example 2: Given a 2D array nums that contains n arrays of distinct integers, return a sorted array containing all the numbers that appear in all n arrays.
+# For example, given nums = [[3,1,2,4,5],[1,2,3,4],[3,4,5,6]], return [3, 4]. 3 and 4 are the only numbers that are in all arrays.
+
+from collections import defaultdict
+
+class Solution:
+    def intersection(self, nums: List[List[int]]) -> List[int]:
+        counts = defaultdict(int)
+        for arr in nums:
+            for x in arr:
+                counts[x] += 1
+
+        n = len(nums)
+        ans = []
+        for key in counts:
+            if counts[key] == n:
+                ans.append(key)
+        
+        return sorted(ans)
+
+# Example 3: 1941. Check if All Characters Have Equal Number of Occurrences
+# Given a string s, determine if all characters have the same frequency.
+# For example, given s = "abacbc", return true. All characters appear twice. Given s = "aaabb", return false. "a" appears 3 times, "b" appears 2 times. 3 != 2.
+
+from collections import defaultdict
+
+class Solution:
+    def areOccurrencesEqual(self, s: str) -> bool:
+        counts = defaultdict(int)
+        for c in s:
+            counts[c] += 1
+        
+        frequencies = counts.values()
+        return len(set(frequencies)) == 1
+
+# Example 4: 560. Subarray Sum Equals K
+# Given an integer array nums and an integer k, find the number of subarrays whose sum is equal to k.
+
+from collections import defaultdict
+
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        counts = defaultdict(int)
+        counts[0] = 1
+        ans = curr = 0
+
+        for num in nums:
+            curr += num
+            ans += counts[curr - k]
+            counts[curr] += 1
+    
+        return ans
+
+# Example 5: 1248. Count Number of Nice Subarrays
+# Given an array of positive integers nums and an integer k. Find the number of subarrays with exactly k odd numbers in them.
+# For example, given nums = [1, 1, 2, 1, 1], k = 3, the answer is 2. The subarrays with 3 odd numbers in them are [1, 1, 2, 1, 1] and [1, 1, 2, 1, 1].
+
+from collections import defaultdict
+
+class Solution:
+    def numberOfSubarrays(self, nums: List[int], k: int) -> int:
+        counts = defaultdict(int)
+        counts[0] = 1
+        ans = curr = 0
+        
+        for num in nums:
+            curr += num % 2
+            ans += counts[curr - k]
+            counts[curr] += 1
+
+        return ans
+```
+
+##### Find Players With Zero or One Losses
+###### My solution
+```
+class Solution(object):
+    def findWinners(self, matches):
+        l = defaultdict(int)
+        losers = []
+        winners = []
+
+        for m in matches:
+            l[m[0]] = 0
+
+        for n in matches:
+            l[n[1]] += 1
+
+        for key, value in l.items():
+            if value == 0:
+                winners.append(key)
+            elif value == 1:
+                losers.append(key)
+
+        return sorted(winners), sorted(losers)
+```
