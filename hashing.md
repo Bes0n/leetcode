@@ -855,8 +855,7 @@ class Solution:
 class Solution(object):
     def findWinners(self, matches):
         l = defaultdict(int)
-        losers = []
-        winners = []
+        losers, winners = [], []
 
         for m in matches:
             l[m[0]] = 0
@@ -871,4 +870,86 @@ class Solution(object):
                 losers.append(key)
 
         return sorted(winners), sorted(losers)
+```
+
+###### Official solution
+```
+# Example 1: Hash Map + Hash Set
+class Solution: 
+    def findWinners(self, matches : List[List[int]]) ->List[List[int]]: 
+        seen = set() losses_count = {}
+        
+        for winner, loser in matches:
+            seen.add(winner)
+            seen.add(loser)
+            losses_count[loser] = losses_count.get(loser, 0) + 1
+        
+        #Add players with 0 or 1 loss to the corresponding list.
+        zero_lose, one_lose = [], []
+        for player in seen:
+            count = losses_count.get(player, 0)
+            if count == 0:
+                zero_lose.append(player)
+            elif count == 1:
+                one_lose.append(player)
+        
+        return [sorted(zero_lose), sorted(one_lose)]
+
+# Example 2: Hash Map
+class Solution: 
+    def findWinners(self, matches: List[List[int]]) ->List[List[int]]: 
+        losses_count = {}
+        
+        for winner, loser in matches:
+            losses_count[winner] = losses_count.get(winner, 0)
+            losses_count[loser] = losses_count.get(loser, 0) + 1
+        
+        zero_lose, one_lose = [], []
+        for player, count in losses_count.items():
+            if count == 0:
+                zero_lose.append(player)
+            if count == 1:
+                one_lose.append(player)
+        
+        return [sorted(zero_lose), sorted(one_lose)]
+```
+
+##### Largest Unique Number
+###### My solution
+```
+    h = defaultdict(int)
+    ans = -1
+
+    for n in nums:
+        h[n] += 1
+    
+    for k, v in h.items():
+        if v == 1:
+            ans = max(ans, k)
+    return ans
+```
+
+##### Largest Unique Number
+###### My solution
+```
+def maxNumberOfBalloons(text):
+    b = {
+        'b': 1,
+        'a': 1,
+        'l': 2,
+        'o': 2,
+        'n': 1
+    }
+    h = defaultdict(int)
+    if len(text) < 7:
+        return 0
+    
+    for c in text:
+        if c in b:
+            h[c] += 1
+    
+    for c in h:
+        h[c] = h[c] // b[c]
+
+    return min(h.values())
 ```
