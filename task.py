@@ -1,29 +1,27 @@
 #!/usr/bin/python3.10
-from collections import defaultdict
+import collections
 
-# text = "loonbalxballpoon"
-# text = "balllllllllllloooooooooon"
-text = "krhizmmgmcrecekgyljqkldocicziihtgpqwbticmvuyznragqoyrukzopfmjhjjxemsxmrsxuqmnkrzhgvtgdgtykhcglurvppvcwhrhrjoislonvvglhdciilduvuiebmffaagxerjeewmtcwmhmtwlxtvlbocczlrppmpjbpnifqtlninyzjtmazxdbzwxthpvrfulvrspycqcghuopjirzoeuqhetnbrcdakilzmklxwudxxhwilasbjjhhfgghogqoofsufysmcqeilaivtmfziumjloewbkjvaahsaaggteppqyuoylgpbdwqubaalfwcqrjeycjbbpifjbpigjdnnswocusuprydgrtxuaojeriigwumlovafxnpibjopjfqzrwemoinmptxddgcszmfprdrichjeqcvikynzigleaajcysusqasqadjemgnyvmzmbcfrttrzonwafrnedglhpudovigwvpimttiketopkvqw"
+ransomNote = "aab"
+magazine = "aabb"
 
-def maxNumberOfBalloons(text):
-    b = {
-        'b': 1,
-        'a': 1,
-        'l': 2,
-        'o': 2,
-        'n': 1
-    }
-    h = defaultdict(int)
-    if len(text) < 7:
-        return 0
-    
-    for c in text:
-        if c in b:
-            h[c] += 1
-    
-    for c in h:
-        h[c] = h[c] // b[c]
+def canConstruct(ransomNote, magazine):
+    # Check for obvious fail case.
+    if len(ransomNote) > len(magazine): return False
 
-    return min(h.values())
+    # In Python, we can use the Counter class. It does all the work that the
+    # makeCountsMap(...) function in our pseudocode did!
+    magazine_counts = collections.Counter(magazine)
+    ransom_note_counts = collections.Counter(ransomNote)
 
-print(maxNumberOfBalloons(text))
+    # For each *unique* character in the ransom note:
+    for char, count in ransom_note_counts.items():
+        # Check that the count of char in the magazine is equal
+        # or higher than the count in the ransom note.
+        magazine_count = magazine_counts[char]
+        if magazine_count < count:
+            return False
+            
+    # # If we got this far, we can successfully build the note.
+    # return True
+
+print(canConstruct(ransomNote, magazine))
