@@ -1,4 +1,8 @@
 # Arrays and Strings
+- Why should we care about something being mutable or immutable? If you have a mutable array arr = ["a", "b", "c"] and an immutable string s = "abc", but you want to instead represent "abd", you can easily do arr[2] = "d", but you cannot do s[2] = "d". As such, if you wanted the string s = "abd", you would need to create it entirely from scratch. With such a small string, it's not a big deal. But sometimes you are dealing with strings with 100,000 characters, so creating new versions just to modify one character is very expensive `O(n)`, where `n` is the size of the string.
+
+- As mentioned before, a majority of algorithm problems will involve an array or string. They are extremely versatile data structures and it's impossible to list all the relevant problem-solving techniques in one article. In the next few articles, we'll go over the most common techniques. But first, let's take a quick look at the complexity of array and string operations.
+
 ##### Two Pointers
 ###### Check if word is a Palindrome
 ```
