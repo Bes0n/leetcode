@@ -565,7 +565,119 @@ def canConstruct(self, ransomNote: str, magazine: str) -> bool:
 - You're given strings jewels representing the types of stones that are jewels, and stones representing the stones you have. Each character in stones is a type of stone you have. You want to know how many of the stones you have are also jewels.
 
 - Letters are case sensitive, so "a" is considered a different type of stone from "A".
-###### My solution
+
+```
+Example 1:
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+
+Example 2:
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+
+Example 3:
+Input: s = "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
 ```
 
+###### My solution
+
+```
+# Solution 1:
+from collections import defaultdict
+
+jewels = "aA"
+stones = "aAAbbbb"
+
+def numJewelsInStones(jewels, stones):
+    jewel = set(jewels)
+    stone = defaultdict(int)
+    total = 0
+
+    for s in stones:
+        if s in jewel:
+            stone[s] += 1
+
+    for j in jewel:
+        if j in stone:
+            total += stone[j]
+    
+    return total
+
+# Solution 2:
+import collections
+
+jewels = "aA"
+stones = "aAAbbbb"
+
+def numJewelsInStones(jewels, stones):
+    jewel = set(jewels)
+    stone = collections.Counter(stones)
+    total = 0
+    
+    for j in jewel:
+        if j in stone:
+            total += stone[j]
+    
+    return total
+```
+
+###### Official solution
+
+```
+class Solution(object):
+    def numJewelsInStones(self, J, S):
+        Jset = set(J)
+        return sum(s in Jset for s in S)
+```
+
+##### Longest Substring Without Repeating Characters
+- Given a string s, find the length of the longest substring without repeating characters.
+
+```
+Example 1:
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+
+Example 2:
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+
+Example 3:
+Input: s = "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+```
+
+###### Official solution
+
+```
+from collections import Counter
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        chars = Counter()
+
+        left = right = 0
+
+        res = 0
+        while right < len(s):
+            r = s[right]
+            chars[r] += 1
+
+            while chars[r] > 1:
+                l = s[left]
+                chars[l] -= 1
+                left += 1
+
+            res = max(res, right - left + 1)
+
+            right += 1
+        return res
 ```

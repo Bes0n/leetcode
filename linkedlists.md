@@ -1,3 +1,6 @@
+# Linked Lists
+- Before starting this chapter, you need to have a basic understanding of object-oriented programming concepts, including classes, objects, and attributes.
+```
 #!/usr/bin/python3.10
 
 class House():
@@ -43,4 +46,8 @@ class AvenueHouse(House):
 
 AveHouse = AvenueHouse("Legerova", 25)
 
+# Calling object from super class, Output: Legerova
 print(AveHouse.avenue)
+```
+
+- Here's some example code for creating a linked list to represent the data `1 --> 2 --> 3`. As you can see, the class that defines a node has a field `val` which will hold the data, and a `next` pointer which references the next node. In the code, we are creating three nodes, one for each number, then setting the `next` pointers accordingly. 
