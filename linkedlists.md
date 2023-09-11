@@ -93,7 +93,7 @@ print(head.next.next.val) # Output 3
 
 - Traversal
     - Iterating forward through a linked list can be done with a simple loop. This is the usual code that you will use to do so: as an example let's get the sum of all values from an integer linked list:
-    
+
     ```
     def get_sum(head):
     ans = 0
@@ -103,4 +103,14 @@ print(head.next.next.val) # Output 3
     
     return ans
     ```
+
     - The final node's `next` pointer is `null`. Therefore, after doing `head = head.next` at the final node, `head` becomes `null` and the while loop ends.
+    - Moving to `head.next` is the equivalent of iterating to the next element in an array. Traversal can also be done recursively:
+    
+    ```
+    def get_sum(head):
+    if not head:
+        return 0
+    
+    return head.val + get_sum(head.next)
+    ```
