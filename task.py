@@ -7,5 +7,13 @@ class ListNode():
 
 
 one = ListNode(1)
+two = ListNode(2)
+three = ListNode(3)
 
-print(one)
+one.next = two
+two.next = three
+head = one
+
+print(head.val) # Output 1
+print(head.next.val) # Output 2
+print(head.next.next.val) # Output 3
