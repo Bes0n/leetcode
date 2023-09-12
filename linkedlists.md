@@ -222,3 +222,112 @@ tail = ListNode(None)
 head.next = tail
 tail.prev = head
 ```
+
+### Dummy pointers
+As mentioned earlier, we usually want to keep a reference to the `head` to ensure we can always access any element. Sometimes, it's better to traverse using a "dummy" pointer and to keep `head` at the head.
+
+```
+def get_sum(head):
+    ans = 0
+    dummy = head
+    while dummy:
+        ans += dummy.val
+        dummy = dummy.next
+    
+    # same as before, but we still have a pointer at the head
+    return ans
+```
+
+# Fast and slow pointers
+When the pointers move at different speeds, usually the "fast" pointer moves two nodes per iteration, whereas the "slow" pointer moves one node per iteration (although this is not always the case). Here's some pseudocode:
+
+```
+// head is the head node of a linked list
+function fn(head):
+    slow = head
+    fast = head
+
+    while fast and fast.next:
+        Do something here
+        slow = slow.next
+        fast = fast.next.next
+```
+
+The reason we need the while condition to also check for `fast.next` is because if `fast` is at the final node, then `fast.next` is null, and trying to access `fast.next.next` would result in an error (you would be doing `null.next`).
+
+- Let's look at some examples where fast and slow pointers can come in handy.
+
+```
+# Example 1: Given the head of a linked list with an odd number of nodes head, return the value of the node in the middle.
+# For example, given a linked list that represents 1 -> 2 -> 3 -> 4 -> 5, return 3.
+# As mentioned in the previous article, the easiest way to solve this problem would be to just convert the linked list into an array by iterating over it, and then just returning the number in the middle.
+
+function fn(head):
+    array = int[]
+    while head:
+        array.push(head.val)
+        head = head.next
+
+    return array[array.length // 2]
+
+# This is basically "cheating", and would never pass as an acceptable solution in an interview. You may have realized that the difficulty in this problem comes from the fact that we don't know how long the linked list is. One thing we could do is iterate through the linked list once with a dummy pointer to find the length, then iterate from the head again once we know the length to find the middle.
+
+def get_middle(head):
+    length = 0
+    dummy = head
+    while dummy:
+        length += 1
+        dummy = dummy.next
+    
+    for _ in range(length // 2):
+        head = head.next
+    
+    return head.val
+
+# The most elegant solution comes from using the fast and slow pointer technique. If we have one pointer moving twice as fast as the other, then by the time it reaches the end, the slow pointer will be halfway through since it is moving at half the speed.
+
+def get_middle(head):
+    slow = head
+    fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    
+    return slow.val
+
+# The pointers use O(1) space, and if there are `n` nodes in the linked list, the time complexity is O(n) for the traversals.
+
+# Example 2: 141. Linked List Cycle
+# Given the head of a linked list, determine if the linked list has a cycle.
+# There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer.
+
+# Why will the pointers always meet, and the fast pointer won't just "skip" over the slow pointer in the cycle? After looping around the cycle for the first time, if the fast pointer is one position behind, then the pointers will meet on the next iteration. If the fast pointer is two positions behind, then it will be one position behind on the next iteration. This pattern continues - after looping around once, the fast pointer moves exactly one step closer to the slow pointer at each iteration, so it's impossible for it to "skip" over.
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        slow = head
+        fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+
+        return False
+
+
+- The hashing solution: if you continuously iterate using the next pointer, there are two possibilities:
+    - If the linked list doesn't have a cycle, you will eventually reach null and finish.
+    - If the linked list has a cycle, you will eventually visit a node twice. We can use a set to detect this.
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        seen = set()
+        while head:
+            if head in seen:
+                return True
+            seen.add(head)
+            head = head.next
+        return False
+```
+
