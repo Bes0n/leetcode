@@ -329,5 +329,43 @@ class Solution:
             seen.add(head)
             head = head.next
         return False
+
+# Example 3: Given the head of a linked list and an integer k, return the k^th node from the end.
+# For example, given the linked list that represents 1 -> 2 -> 3 -> 4 -> 5 and k = 2, return the node with value 4, as it is the 2nd node from the end.
+
+# If we separate the two pointers by a gap of k, and then move them at the same speed, they will always be k apart. When the fast pointer (the one further ahead) reaches the end, then the slow pointer must be at the desired node, since it is k nodes behind. 
+
+def find_node(head, k):
+    slow = head
+    fast = head
+    for _ in range(k):
+        fast = fast.next
+    
+    while fast:
+        slow = slow.next
+        fast = fast.next
+    
+    return slow
 ```
 
+##### Middle of the Linked List
+###### My solution
+```
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = head
+        fast = head
+        
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        return slow
+        
+```

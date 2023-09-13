@@ -1,13 +1,15 @@
 #!/usr/bin/python3.10
 from collections import defaultdict
 
-s = "Let's take LeetCode contest"
+s = "a-bC-dj"
 
 def reverseWords(s):
-    n = s.split()
-    for c in n:
-        s = " ".join([c[::-1]])
-    
-    print(s)
+    left, right = 0, len(s) - 1
+    s = list(s)
+    while left < right:
+        if s[left].isalpha() == True and s[right].isalpha() == True:
+            s[left], s[right] = s[right], s[left]
+        left, right = left + 1, right - 1
+    return ''.join(s)
 
-reverseWords(s)
+print(reverseWords(s))

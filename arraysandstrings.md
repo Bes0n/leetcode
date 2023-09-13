@@ -118,6 +118,52 @@ class Solution:
         helper(0, len(s) - 1)
 ```
 
+##### 557. Reverse Words in a String III
+Given a string s, reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+
+```
+Example 1:
+
+Input: s = "Let's take LeetCode contest"
+Output: "s'teL ekat edoCteeL tsetnoc"
+Example 2:
+
+Input: s = "God Ding"
+Output: "doG gniD"
+```
+
+###### My solution
+
+```
+# Solution 1 (Faster):
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        words = s.split()
+        ans = []
+        for word in words:
+            ans.append(word[::-1])
+        
+        return ' '.join(ans)
+
+# Solution 2 (Slower):
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        words = s.split()
+        ans = ''
+
+        for w in words:
+            word = list(w)
+            left, right = 0, len(word) - 1
+            while left < right:
+                word[left], word[right] = word[right], word[left]
+                left += 1
+                right -= 1
+                ans = " ".join(word)
+        
+        return ans
+```
+
+
 ##### Squares of a Sorted Array
 ```
 # Example 1:
