@@ -1,15 +1,19 @@
 #!/usr/bin/python3.10
-from collections import defaultdict
+from typing import Optional
 
-s = "a-bC-dj"
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
-def reverseWords(s):
-    left, right = 0, len(s) - 1
-    s = list(s)
-    while left < right:
-        if s[left].isalpha() == True and s[right].isalpha() == True:
-            s[left], s[right] = s[right], s[left]
-        left, right = left + 1, right - 1
-    return ''.join(s)
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]):
+        slow = head
+        fast = head
+        
+        while slow:
+            print(slow.val)
+            slow = slow.next
 
-print(reverseWords(s))
+
+print(Solution.deleteDuplicates([1,1,2,3,3]))
