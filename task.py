@@ -1,13 +1,20 @@
 #!/usr/bin/python3.10
 class Solution:
-    def removeDuplicates(self, s: str) -> str:
+    def simplifyPath(self, path: str) -> str:
+        s = path.split('/')
         stack = []
+
+        for c in s:
+            if c != '' and c != '.' and c != '..':
+                stack.append(c)
+            elif c == '..' and stack:
+                stack.pop()
         
-        if not stack:
-            stack.append(s[0])
-                            
-        return "".join(stack)
+        return "/" + "/".join(stack)
+    
+# path = "/a/./b/../../c/"
+# path = "//home//foo//"
+# path = "/home//../"
+path = "/../"
 
-s = "aababaab"
-
-print(Solution.removeDuplicates(Solution,s))
+print(Solution.simplifyPath(Solution,path))
