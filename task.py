@@ -1,19 +1,13 @@
 #!/usr/bin/python3.10
-from typing import Optional
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
 class Solution:
-    def deleteDuplicates(self, head: Optional[ListNode]):
-        slow = head
-        fast = head
+    def removeDuplicates(self, s: str) -> str:
+        stack = []
         
-        while slow:
-            print(slow.val)
-            slow = slow.next
+        if not stack:
+            stack.append(s[0])
+                            
+        return "".join(stack)
 
+s = "aababaab"
 
-print(Solution.deleteDuplicates([1,1,2,3,3]))
+print(Solution.removeDuplicates(Solution,s))
