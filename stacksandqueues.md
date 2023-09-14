@@ -103,5 +103,5 @@ class Solution:
         return build(s) == build(t)
 ```
 
-## Middle of the Linked List
-### My solution
+### Middle of the Linked List
+#### My solution
