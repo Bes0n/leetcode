@@ -151,3 +151,6 @@ class Solution:
         final_str = "/" + "/".join(stack)
         return final_str
 ```
+
+#### Simplify Path
+##### My solution

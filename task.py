@@ -1,20 +1,19 @@
 #!/usr/bin/python3.10
+
+import itertools
+
 class Solution:
-    def simplifyPath(self, path: str) -> str:
-        s = path.split('/')
+    def maxRepeating(self, s: str) -> str:
+        string = list(s)
         stack = []
 
-        for c in s:
-            if c != '' and c != '.' and c != '..':
-                stack.append(c)
-            elif c == '..' and stack:
-                stack.pop()
-        
-        return "/" + "/".join(stack)
-    
-# path = "/a/./b/../../c/"
-# path = "//home//foo//"
-# path = "/home//../"
-path = "/../"
+        for curr in string:
+            if stack:
+                curr.isupper() 
+        return "".join(stack)
 
-print(Solution.simplifyPath(Solution,path))
+# s = "leEeetcode"
+s = "Pp"
+# s = "s"
+
+print(Solution.maxRepeating(Solution, s))
