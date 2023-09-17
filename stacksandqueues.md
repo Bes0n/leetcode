@@ -154,3 +154,132 @@ class Solution:
 
 #### Simplify Path
 ##### My solution
+```
+class Solution:
+    def makeGood(self, s: str) -> str:
+        string = list(s)
+        stack = []
+
+        for curr in string:
+            if stack and curr.islower() and stack[-1].isupper():
+                if stack[-1].lower() == curr:
+                    stack.pop()
+                else:
+                    stack.append(curr)
+            
+            elif stack and curr.isupper() and stack[-1].islower():
+                if stack[-1].upper() == curr:
+                    stack.pop()
+                else:
+                    stack.append(curr)
+            else:
+                stack.append(curr)
+        
+        return "".join(stack)
+```
+
+##### Official solution
+
+```
+class Solution:
+    def makeGood(self, s: str) -> str:
+        string = list(s)
+        stack = []
+
+        for curr in string:
+            if stack and curr == stack[-1].swapcase():
+                stack.pop()
+            else:
+                stack.append(curr)
+        
+        return "".join(stack)
+```
+
+## Queues
+While a stack followed a **LIFO** pattern, a queue follows **FIFO** (first in first out). In a stack, elements are added and removed from the same side. In a queue, elements are added and removed from opposite sides. Like with a stack, there are multiple ways to implement a queue, but the important thing that defines it is the abstract interface of adding and removing from opposite sides.
+
+Queues are trickier to implement than stacks if you want to maintain good performance. Like a stack, you could just use a dynamic array, but operations on the front of the array (adding or removal) are `O(n)`, where `n` is the size of the array. Adding to a queue is called enqueue and deletions are called dequeue. If you want these operations to be `O(1)`, you'll need a more sophisticated implementation.
+
+```
+# Declaration: we will use deque from the collections module
+import collections
+queue = collections.deque()
+
+# If you want to initialize it with some initial values:
+queue = collections.deque([1, 2, 3])
+
+# Enqueueing/adding elements:
+queue.append(4)
+queue.append(5)
+
+# Dequeuing/removing elements:
+queue.popleft() # 1
+queue.popleft() # 2
+
+# Check element at front of queue (next element to be removed)
+queue[0] # 3
+
+# Get size
+len(queue) # 3
+```
+
+**Example: 933**. Number of Recent Calls
+Implement the `RecentCounter` class. It should support `ping(int t)`, which records a call at time `t`, and then returns an integer representing the number of calls that have happened in the range `[t - 3000, t]`. Calls to ping will have increasing `t`.
+
+```
+from collections import deque
+
+class RecentCounter:
+    def __init__(self):
+        self.queue = deque()
+
+    def ping(self, t: int) -> int:
+        while self.queue and self.queue[0] < t - 3000:
+            self.queue.popleft()
+        
+        self.queue.append(t)
+        return len(self.queue)
+
+
+# Your RecentCounter object will be instantiated and called as such:
+# obj = RecentCounter()
+# param_1 = obj.ping(t)
+```
+
+#### Moving Average from Data Stream
+Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window.
+
+- Implement the `MovingAverage` class:
+
+    - `MovingAverage(int size)` Initializes the object with the size of the window `size`.
+    - `double next(int val)` Returns the moving average of the last `size` values of the stream.
+
+##### Official solution
+```
+class MovingAverage:
+
+    def __init__(self, size: int):
+        self.size = size
+        self.queue = deque()
+        # number of elements seen so far
+        self.window_sum = 0
+        self.count = 0
+
+    def next(self, val: int) -> float:
+        self.count += 1
+        # calculate the new sum by shifting the window
+        self.queue.append(val)
+        
+        if self.count > self.size:
+            tail = self.queue.popleft() 
+        else: 
+            tail = 0
+
+        self.window_sum = self.window_sum - tail + val
+
+        return self.window_sum / min(self.size, self.count)
+
+# Your MovingAverage object will be instantiated and called as such:
+# obj = MovingAverage(size)
+# param_1 = obj.next(val)
+```
