@@ -283,3 +283,46 @@ class MovingAverage:
 # obj = MovingAverage(size)
 # param_1 = obj.next(val)
 ```
+
+## Monotonic
+A monotonic stack or queue is one whose elements are always sorted. It can be sorted either ascending or descending, depending on the algorithm. Monotonic stacks and queues maintain their sorted property by removing elements that would violate the property before adding new elements. For example, let's say you had a monotonically increasing stack, currently `stack = [1, 5, 8, 15, 23]`. You want to push `14` onto the stack. To maintain the sorted property, we need to first pop the `15` and `23` before pushing the `14` - after the push operation, we have `stack = [1, 5, 8, 14]`.
+
+```
+Given an integer array nums
+
+stack = []
+for num in nums:
+    while stack.length > 0 AND stack.top >= num:
+        stack.pop()
+    // Between the above and below lines, do some logic depending on the problem
+    stack.push(num)
+```
+
+As we discussed earlier in the sliding window chapter, despite the nested loop, the time complexity is still *O(n)*, where *n* is the length of the array, because the inner while loop can only iterate over each element once across all for loop iterations, making the for loop iterations amortized *O(1)*.
+
+**Example 1: 739**. Daily Temperatures
+
+Given an array of integers `temperatures` that represents the daily temperatures, return an array `answer` such that `answer[i]` is the number of days you have to wait after the i-th day to get a warmer temperature. If there is no future day that is warmer, have `answer[i] = 0` instead.
+
+```
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        stack = []
+        answer = [0] * len(temperatures)
+        
+        for i in range(len(temperatures)):
+            while stack and temperatures[stack[-1]] < temperatures[i]:
+                j = stack.pop()
+                answer[j] = i - j
+            stack.append(i)
+        
+        return answer
+```
+
+**Example 2: 239**. Sliding Window Maximum
+
+Given an integer array `nums` and an integer `k`, there is a sliding window of size k that moves from the very left to the very right. For each window, find the maximum element in the window.
+
+For example, given `nums = [1, 3, -1, -3, 5, 3, 6, 7], k = 3`, return `[3, 3, 5, 5, 6, 7]`. The first window is `[1, 3, -1, -3, 5, 3, 6, 7]` and the last window is `[1, 3, -1, -3, 5, 3, 6, 7]`
+
+Note: this problem is significantly more difficult than any problem we have looked at so far. Don't be discouraged if you are having trouble understanding the solution.
